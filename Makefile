@@ -14,7 +14,6 @@ LIB_LINK =
 LFLAGS += $(LIB_PATH) $(LIB_LINK)
 
 all:	$(TARGET_NAME)
-	cp $(TARGET_NAME) ./bin/.
 
 $(TARGET_NAME):	$(OBJS) 
 	$(CXX) $^ -o $@ $(LFLAGS)	
