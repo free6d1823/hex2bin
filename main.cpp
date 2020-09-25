@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "gdc_config_seq_planar_rgb444.h"
 
 static void usage(char* name)
 {
@@ -120,7 +121,22 @@ int main(int argc, char* argv[])
             exit(-1);
         }   
     }
-
+//h to bin	
+	if(outputfile != NULL) {
+	int length = sizeof(planar_rgb444_1920x1080_seq);
+		fpout = fopen(outputfile, "wb");
+	printf("write %s, %p %d bytes\n", outputfile, planar_rgb444_1920x1080_seq, 	length);
+	
+	unsigned char* pBuffer = (unsigned char* )malloc(length);
+	memcpy(pBuffer, planar_rgb444_1920x1080_seq, length);
+	printf("write buffer %p\n", pBuffer);
+		fwrite(pBuffer, 1, length, fpout);
+		fclose(fpout);
+    printf("start: %x %x %x %x, last 4: %x,%x,%x,%x\n", 
+    pBuffer[0], pBuffer[1], pBuffer[2], pBuffer[3], 
+    pBuffer[length-4], pBuffer[length-3], pBuffer[length-2], pBuffer[length-1]);
+		exit(0);
+	}
 
     if ( inputfile[0] == NULL || outputfile == NULL) {
         usage(argv[0]);
